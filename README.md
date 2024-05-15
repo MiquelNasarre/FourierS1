@@ -167,4 +167,4 @@ a bunch of problems which will not be adressed in the coming future.
 
 Overall the program is not complete, but still it is able to do what it is supposed to. And it made the grounding for 
 the $\mathbb{S}^2$ version of the program, which has much more care and effort put into it and I greatly reccomment 
-you take a look at [it]().
+you take a look at [it](https://github.com/MiquelNasarre/FourierS2).
