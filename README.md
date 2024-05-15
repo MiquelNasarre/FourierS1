@@ -57,19 +57,107 @@ forward and easy to use. You just press the *Draw* button and draw any shape you
 using the mouse, once you're done press enter and the program will compute everything and display it as a 
 function.
 
-Now how does it work? Once you press the draw button, every time you are pressing the left button of the mouse 
-and the mouse position changes it records a new location in an array. Once all the locations are recorded and you press 
-enter the program considers every location is evenly spaced in time, and it distributes the function points accordingly. 
-This assumption greatly simplifies the math in the paper, since all of the points are evenly spaced, every time we compute 
-$t_{i+1} -t_i$ it will just be $\frac{2\pi}{N}$ where $N$ is the total number of points.
-
 To see the points you have drawn just click on the shom button, then the points stored on the *Fourier* class will be displayed. 
 You can also modify the number of points you want using the Points input on the top of the menu bar.
 
+Now how does it work? Once you press the draw button, every time you are pressing the left button of the mouse 
+and the mouse position changes it records a new location in an array. Once all the locations are recorded and you press 
+enter the program considers every location is evenly spaced in time, and it distributes the function points accordingly. 
+
+This assumption greatly simplifies the math in the paper, since all of the points are evenly spaced, every time we compute 
+$t_{i+1} -t_i$ it will just be $\frac{2\pi}{N}$ where $N$ is the total number of points. So the formulas we will be using 
+will be simplified using this equality.
+
+For computing the actual coefficients, after choosing which ones to compute, which will be discussed in the following 
+section, and centering the figure in order that the first coefficient is $0$, it uses the modified formula from the paper
+
+$$
+f_n \approx \frac{1}{N} \sum_{i=0}^{N-1} \frac{z_i+z_{i+1}}{2} \overline{\psi_n} \left( 2\pi \frac{i + 1/2}{N} \right)
+$$
+
+where
+
+$$
+\psi_n (x) = e^{inx}
+$$
+
+and the $z_i$'s are the complex points drawn on the plane. 
+
+Then to display it, it calculates the fourier series for each and 
+every coefficient in order to draw the next coefficient circle in the correct position, and for the last one it just displays 
+the function up to a given value of $t$ to give the illusion that the circles are drawing the function. For reference de Fourier 
+series looks as follows.
+
+$$
+f^L (x) = \sum_{\ell\in L} f_\ell \psi_\ell (x)
+$$
+
+
 ### Error Computations
+For knowing how many coefficients to compute we will be using the formulas from the paper. You can specify your desired error 
+in the Error input just below the points input. You can also specify how many coefficients will be computed prior to the estimation 
+in order to make the estimation more precise. For refernce the formula for the upper and lower bound of the coefficients to compute 
+is
+
+$$
+L_f^\pm(\epsilon) = \frac{||df||^2 \pm \epsilon^{-1}
+\sqrt{||\Delta f||^2||f||^2 - ||df||^4}}{||f||^2}
+$$
+
+Where $L_f^\pm$ determines the upper and lower bounds for the coefficients so that $\ell^2 \in \left\[L_f^- , L_f^+ \right]$.
+
+In case we have already some coefficients computed $I\subset\Lambda$ we may use the formula for the new set of frequencies
+
+$$
+L_f(\epsilon,I) = I \cup L_{f^{\Lambda\setminus I}}
+\left(\frac{\epsilon||f||}{||f^{\Lambda\setminus I}||}\right)
+$$
+
+To calculate all the norms we will be using the modified formulas from the paper
+
+$$
+||f||^2 \approx \frac{1}{4N}\sum_{i=0}^{N-1} (z_i + z_{i+1})^2
+$$
+
+$$
+||df||^2 \approx N \sum_{i=0}^{N-1} (z_{i+1} - z_i)^2
+$$
+
+$$
+||\Delta f||^2 \approx 
+\frac{N^3}{8\pi^2}\sum_{i=0}^{N-1} \left(z_{i+1} + z_{i-1} - 2z_i \right)^2
+$$
+
+Using all this as explained in the paper we obtain a subset of frequencies that will guarantee that the error is 
+below our threshold. You can see the actual error obtained from the coefficients, as well as how many were calculated 
+in the menu bar, where it says *Discrete error* and *Coefficients* respectively.
 
 ### Coefficients View
+As an interactive and intuitive way to view the coefficients I created a small popup window in order to display them 
+as a discrete graph. Just click the *Coefficients* button at the beggining of the menu bar and you will have a window 
+like the following one.
+
+![Coefficients](https://github.com/MiquelNasarre/FourierS1/assets/124403865/4f3d4d9e-b7b8-4ab3-8586-d8ba743114a8)
+
+That way you can visually see which coefficients have a bigger importance on the series, looking like a Fourier transform.
 
 ### File Handling
+The program also allows for saving and loading of figures, saved as sets of points, the files are stored on the 
+[saveFiles](https://github.com/MiquelNasarre/FourierS1/tree/master/Fourier/saveFiles) folder. The format is pretty 
+straight forward and you can use this feature in order to load files from other programs you might have or to save 
+any of your drawings.
 
+## Issues
+Since this is not the main program of the final project, and it is my first attempt at graphics programming, it has 
+a bunch of problems which will not be adressed in the coming future.
 
+It does not allow for resizing or full screen. Which as a regular user of desktop applications can get really frustrating.
+
+It has a strong dependence on external code, so it does not allow for great control of the features in your program.
+
+It does not allow to save the coefficients it calculates, which would be interesting if you want to plot your Fourier Series somewhere else.
+
+It does not allow for multiple plots at the same time or interpolation between them, which is a nice feature to implement in such programs.
+
+Overall the program is not complete, but still it is able to do what it is supposed to, and it made the grounding for 
+the $\mathbb{S}^2$ version of the program, which has much more care and effort put into it and I greatly reccomment you take a look at [it]().
