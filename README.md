@@ -15,7 +15,7 @@ https://github.com/MiquelNasarre/FourierS1/assets/124403865/fafab4c6-e3ca-4b7c-a
 This video shows the opening example of the program.
 
 ## Requirements
-- [Visual Studio](https://visualstudio.com) (Is mandatory for the program to be able to compile all the diffent C++ files)
+- [Visual Studio](https://visualstudio.com) (For the program to be able to compile all the diffent C++ files correctly)
 - [SFML 2.6.0](https://www.sfml-dev.org/download.php) (The files needed are already included in the repository)
 
 If you are not planning to build and run the program yourself and you do not need the code, you can also find the 
@@ -116,16 +116,16 @@ $$
 To calculate all the norms we will be using the modified formulas from the paper
 
 $$
-||f||^2 \approx \frac{1}{4N}\sum_{i=0}^{N-1} (z_i + z_{i+1})^2
+||f||^2 \approx \frac{1}{4N}\sum_{i=0}^{N-1} |z_i + z_{i+1}|^2
 $$
 
 $$
-||df||^2 \approx N \sum_{i=0}^{N-1} (z_{i+1} - z_i)^2
+||df||^2 \approx N \sum_{i=0}^{N-1} |z_{i+1} - z_i|^2
 $$
 
 $$
 ||\Delta f||^2 \approx 
-\frac{N^3}{8\pi^2}\sum_{i=0}^{N-1} \left(z_{i+1} + z_{i-1} - 2z_i \right)^2
+\frac{N^3}{8\pi^2}\sum_{i=0}^{N-1} |z_{i+1} + z_{i-1} - 2z_i |^2
 $$
 
 Using all this as explained in the paper we obtain a subset of frequencies that will guarantee that the error is 
