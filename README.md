@@ -1,13 +1,13 @@
 # Fourier Series for $L^2(\mathbb{S}^1)$ Functions
 
 This project is the first implementation of the formulas found on my final project. 
-This one centers on functions from $\mathbb{S}^1$ to the complex plane.
+This one centers on functions from $\mathbb{S}^1$ to the complex plain.
 
-It consisists in an application which allows you to draw any closed curve. Then it takes those 
+It consists in an application which allows you to draw any closed curve. Then it takes those 
 points and using the formulas shown in the *"Computation Aproximations"* section of the 
 paper, it computes a number of Fourier coefficients according to the error you have chosen. 
 
-It then displays the plot of the Fourier series in an interective manner inspired in the 3blue1brown 
+It then displays the plot of the Fourier series in an interactive manner inspired in the 3blue1brown 
 Youtube video [But what is a Fourier series?](https://www.youtube.com/watch?v=r6sGWTCMz2k&t=376s). 
 
 https://github.com/MiquelNasarre/FourierS1/assets/124403865/fafab4c6-e3ca-4b7c-a5cb-ce5e8db3b79b
@@ -15,7 +15,7 @@ https://github.com/MiquelNasarre/FourierS1/assets/124403865/fafab4c6-e3ca-4b7c-a
 This video shows the opening example of the program.
 
 ## Requirements
-- [Visual Studio](https://visualstudio.com) (Is mandatory for the program to be able to unite all the diffent C++ files)
+- [Visual Studio](https://visualstudio.com) (Is mandatory for the program to be able to compile all the diffent C++ files)
 - [SFML 2.6.0](https://www.sfml-dev.org/download.php) (The files needed are already included in the repository)
 
 If you are not planning to build and run the program yourself and you do not need the code, you can also find the 
@@ -23,13 +23,13 @@ program executable with its associated files in the following [link](). Please n
 Windows 7+ operating systems.
 
 ## How to Use it
-First we clone the repository into your computer and open the solution file with Visual Studio, then compile the only
+First, clone the repository into your computer and open the solution file with Visual Studio, then compile the only
 project inside and the App should be up and running, you should compile it in 32bit (x86).
 Note: if you don't operate in Windows you might have some compatibility problems with the SFML renderer.
 
 ## How it Works
 Since this program is my first take on creating Windows desktop applications, it mostly relies on its dependencies for 
-all the techincal side. The program uses the SFML tools for all the window creation, interaction and rendering.
+all the technical side. The program uses the SFML tools for all the window creation, interaction and rendering.
 
 The programs structure is poorly organized, but after some effort is easy to follow its workings. The 
 main file just calls the creation of a *Visual* class and runs the main Loop function, so all of the 
@@ -37,7 +37,7 @@ program revolves around such loop. Every frame it does an event check and render
 exiting the loop once the window is closed.
 
 All of the widgets found on the menu bar are self designed, you can find them in the resources. Most 
-of them have their own class and interections. This is the only program with such features since the 
+of them have their own class and interactions. This is the only program with such features since the 
 3D program uses the *imGui* functions for all the widgets.
 
 For the Fourier series it has a class named *iFourier* which is used to handle most of the computations 
@@ -54,22 +54,22 @@ math seen in the paper for this particular case. Lets go through its functionali
 ### Drawing
 The drawing tool is mostly how you are supposed to design functions with the program. It is pretty straight 
 forward and easy to use. You just press the *Draw* button and draw any shape you want in the complex plane 
-using the mouse, once you're done press enter and the program will compute everything and display it as a 
+using the mouse. Once you're done, press enter and the program will compute everything and display it as a 
 function.
 
-To see the points you have drawn just click on the shom button, then the points stored on the *Fourier* class will be displayed. 
+To see the points you have drawn just click on the *Show* button, then the points stored on the *Fourier* class will be displayed. 
 You can also modify the number of points you want using the Points input on the top of the menu bar.
 
-Now how does it work? Once you press the draw button, every time you are pressing the left button of the mouse 
+Now, how does it work? Once you press the *Draw* button, every time you are pressing the left button of the mouse 
 and the mouse position changes it records a new location in an array. Once all the locations are recorded and you press 
-enter the program considers every location is evenly spaced in time, and it distributes the function points accordingly. 
+*Enter*, the program considers every location is evenly spaced in time, and it distributes the function points accordingly. 
 
-This assumption greatly simplifies the math in the paper, since all of the points are evenly spaced, every time we compute 
+This assumption greatly simplifies the math in the paper, since all of the points are evenly spaced. Every time we compute 
 $t_{i+1} -t_i$ it will just be $\frac{2\pi}{N}$ where $N$ is the total number of points. So the formulas we will be using 
 will be simplified using this equality.
 
-For computing the actual coefficients, after choosing which ones to compute, which will be discussed in the following 
-section, and centering the figure in order that the first coefficient is $0$, it uses the modified formula from the paper
+For computing the actual coefficients, after choosing which ones to compute $-$ which will be discussed in the following 
+section $-$ and centering the figure in order that the first coefficient is $0$, it uses the modified formula from the paper
 
 $$
 f_n \approx \frac{1}{N} \sum_{i=0}^{N-1} \frac{z_i+z_{i+1}}{2} \overline{\psi_n} \left( 2\pi \frac{i + 1/2}{N} \right)
@@ -81,9 +81,9 @@ $$
 \psi_n (x) = e^{inx}
 $$
 
-and the $z_i$'s are the complex points drawn on the plane. 
+and the $z_i$'s are the complex points drawn on the plain. 
 
-Then to display it, it calculates the fourier series for each and 
+Then to display it, it calculates the Fourier series for each and 
 every coefficient in order to draw the next coefficient circle in the correct position, and for the last one it just displays 
 the function up to a given value of $t$ to give the illusion that the circles are drawing the function. For reference de Fourier 
 series looks as follows.
@@ -95,8 +95,8 @@ $$
 
 ### Error Computations
 For knowing how many coefficients to compute we will be using the formulas from the paper. You can specify your desired error 
-in the Error input just below the points input. You can also specify how many coefficients will be computed prior to the estimation 
-in order to make the estimation more precise. For refernce the formula for the upper and lower bound of the coefficients to compute 
+in the *Error* input just below the *Points* input. You can also specify how many coefficients will be computed prior to the estimation 
+in order to make the estimation more precise. For reference the formula for the upper and lower bound of the coefficients to compute 
 is
 
 $$
