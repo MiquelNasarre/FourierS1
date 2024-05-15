@@ -125,7 +125,7 @@ $$
 
 $$
 ||\Delta f||^2 \approx 
-\frac{N^3}{8\pi^4}\sum_{i=0}^{N-1} |z_{i+1} + z_{i-1} - 2z_i |^2
+2N^3\sum_{i=0}^{N-1} |z_{i+1} + z_{i-1} - 2z_i |^2
 $$
 
 Using all this as explained in the paper we obtain a subset of frequencies that will guarantee that the error is 
