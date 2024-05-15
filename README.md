@@ -38,13 +38,14 @@ exiting the loop once the window is closed.
 
 All of the widgets found on the menu bar are self designed, you can find them in the resources. Most 
 of them have their own class and interactions. This is the only program with such features since the 
-3D program uses the *imGui* functions for all the widgets.
+3D program uses the [imGui](https://github.com/ocornut/imgui) functions for all the widgets.
 
 For the Fourier series it has a class named *iFourier* which is used to handle most of the computations 
 regarding the coefficients, as well as the plotting and rendering of the functions.
 
-Also I would like to remark the use of the *Complex* struct, that later would be implemented in the 
-[Math Library](https://github.com/MiquelNasarre/Math) used to do all calculations on the 3D program.
+Also I would like to remark the use of the *Complex struct* for all the complex number operations, 
+that later would be implemented in the [Math Library](https://github.com/MiquelNasarre/Math), which 
+is used to do all calculations on the 3D program.
 
 ## Features and Math Involved
 As mentioned before the main goal of this program is to showcase how the Fourier series work and implement 
@@ -52,24 +53,27 @@ the error functions found on the paper. For this reason I have implemented featu
 math seen in the paper for this particular case. Lets go through its functionalities.
 
 ### Drawing
-The drawing tool is mostly how you are supposed to design functions with the program. It is pretty straight 
-forward and easy to use. You just press the *Draw* button and draw any shape you want in the complex plane 
-using the mouse. Once you're done, press enter and the program will compute everything and display it as a 
-function.
+The drawing tool is mostly how you are supposed to design functions with the program. It is pretty 
+straightforward and easy to use. You just press the *Draw* button and draw any shape you want in the 
+complex plane using the mouse. Once you're done, press enter and the program will compute everything 
+and display it as a function.
 
-To see the points you have drawn just click on the *Show* button, then the points stored on the *Fourier* class will be displayed. 
-You can also modify the number of points you want using the Points input on the top of the menu bar.
+To see the points you have drawn just click on the *Show* button, then the points stored on the *iFourier* 
+class will be displayed. You can also modify the number of points you want using the Points input on the 
+top of the menu bar.
 
-Now, how does it work? Once you press the *Draw* button, every time you are pressing the left button of the mouse 
-and the mouse position changes it records a new location in an array. Once all the locations are recorded and you press 
-*Enter*, the program considers every location is evenly spaced in time, and it distributes the function points accordingly. 
+Now, how does it work? Once you press the *Draw* button, every time you are pressing the left button of the 
+mouse and the mouse position changes it records a new location in an array. Once all the locations are recorded 
+and you press *Enter*, the program considers every location is evenly spaced in time, and it distributes the 
+function points accordingly. 
 
-This assumption greatly simplifies the math in the paper, since all of the points are evenly spaced. Every time we compute 
-$t_{i+1} -t_i$ it will just be $\frac{2\pi}{N}$ where $N$ is the total number of points. So the formulas we will be using 
-will be simplified using this equality.
+This assumption greatly simplifies the math in the paper, since all of the points are evenly spaced. Every 
+time we compute $t_{i+1} -t_i$ it will just be $\frac{2\pi}{N}$ where $N$ is the total number of points. 
+So the formulas we will be using will be simplified using this equality.
 
-For computing the actual coefficients, after choosing which ones to compute $-$ which will be discussed in the following 
-section $-$ and centering the figure in order that the first coefficient is $0$, it uses the modified formula from the paper
+For computing the actual coefficients, after choosing which ones to compute $-$ which will be discussed in 
+the following section $-$ and centering the figure in order that the first coefficient is $0$, it uses the 
+modified formula from the paper
 
 $$
 f_n \approx \frac{1}{N} \sum_{i=0}^{N-1} \frac{z_i+z_{i+1}}{2} \overline{\psi_n} \left( 2\pi \frac{i + 1/2}{N} \right)
@@ -144,20 +148,23 @@ That way you can visually see which coefficients have a bigger importance on the
 ### File Handling
 The program also allows for saving and loading of figures, saved as sets of points, the files are stored on the 
 [saveFiles](https://github.com/MiquelNasarre/FourierS1/tree/master/Fourier/saveFiles) folder. The format is pretty 
-straight forward and you can use this feature in order to load files from other programs you might have or to save 
+straightforward and you can use this feature in order to load files from other programs you might have or to save 
 any of your drawings.
 
 ## Issues
 Since this is not the main program of the final project, and it is my first attempt at graphics programming, it has 
 a bunch of problems which will not be adressed in the coming future.
 
-It does not allow for resizing or full screen. Which as a regular user of desktop applications can get really frustrating.
+- It does not allow for resizing or full screen. Which as a regular user of desktop applications can get really frustrating.
 
-It has a strong dependence on external code, so it does not allow for great control of the features in your program.
+- It has a strong dependence on external code, so it does not allow for great control of the features in the program.
 
-It does not allow to save the coefficients it calculates, which would be interesting if you want to plot your Fourier Series somewhere else.
+- It does not allow to save the coefficients it calculates, which would be interesting if you want to plot your Fourier Series somewhere else.
 
-It does not allow for multiple plots at the same time or interpolation between them, which is a nice feature to implement in such programs.
+- It does not allow for multiple plots at the same time or interpolation between them, which is a nice feature to implement in such programs.
 
-Overall the program is not complete, but still it is able to do what it is supposed to, and it made the grounding for 
-the $\mathbb{S}^2$ version of the program, which has much more care and effort put into it and I greatly reccomment you take a look at [it]().
+- Some bugs may be still unfixed, not program killing bugs as far as I know, but they are undesirable.
+
+Overall the program is not complete, but still it is able to do what it is supposed to. And it made the grounding for 
+the $\mathbb{S}^2$ version of the program, which has much more care and effort put into it and I greatly reccomment 
+you take a look at [it]().
