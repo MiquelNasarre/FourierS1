@@ -231,7 +231,7 @@ void iFourier::generateCoef()
 	int m = Points.size();
 	for (unsigned int i = 0; i < Order.size(); i++) {
 		Coef.push_back(Complex(0));
-		for (unsigned int j = 0; j < m; j++)
+		for (int j = 0; j < m; j++)
 			Coef[i] += Points[j] * Complex::exp(-I * float(2 * Pi * j * Order[i] / m));
 		Coef[i] = Coef[i] / float(m);
 	}
