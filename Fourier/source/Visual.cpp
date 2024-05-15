@@ -287,7 +287,7 @@ void Visual::eventCheck()
 	}
 		
 
-	if (pressing && !Mouse::isButtonPressed(Mouse::Left))
+	if (pressing && !Mouse::isButtonPressed(Mouse::Left) && !Keyboard::isKeyPressed(Keyboard::Key::Space))
 		pressing = false;
 
 	if (dataWindow.isOpen())
@@ -304,7 +304,7 @@ void Visual::eventCheck()
 		return;
 	}
 
-	else if (settings.playing && !pressing && settings.Pause.eventCheck(MousePos) == Button::Pressed) {
+	else if (settings.playing && !pressing && (settings.Pause.eventCheck(MousePos) == Button::Pressed || Keyboard::isKeyPressed(Keyboard::Key::Space))) {
 		settings.playing = false;
 		MouseTracker = MousePos;
 		PrevCenter = renderer.getCenter();
@@ -312,7 +312,7 @@ void Visual::eventCheck()
 		return;
 	}
 	
-	else if (!settings.playing && !pressing && settings.Play.eventCheck(MousePos) == Button::Pressed) {
+	else if (!settings.playing && !pressing && (settings.Play.eventCheck(MousePos) == Button::Pressed || Keyboard::isKeyPressed(Keyboard::Key::Space))) {
 		settings.playing = true;
 		MouseTracker = MousePos;
 		PrevCenter = renderer.getCenter();

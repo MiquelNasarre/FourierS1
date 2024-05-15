@@ -90,66 +90,76 @@ float iFourier::getCircleRadius(int i)
 
 float iFourier::norm2(std::vector<Complex>& points)
 {
-	float x = 0;
-	int m = points.size();
-	for (int i = 0; i < m; i++)
-		x += points[i].a * points[i].a + points[i].b * points[i].b;
-	return x / m;
+	float x = 0.f;
+	int N = points.size();
+	for (int i = 0; i < N; i++)
+	{
+		Complex z = points[i] + points[(i + 1) % N];
+		x += z.a * z.a + z.b * z.b;
+	}
+	return 0.25f * x / N;
 }
 
 float iFourier::dnorm2(std::vector<Complex>& points)
 {
-	std::vector<Complex> dpoints;
-	int m = points.size();
-	for (int i = 1; i < m; i++)
-		dpoints.push_back((points[i] - points[i - 1]) * m / (2 * Pi));
-	return norm2(dpoints);
+	float x = 0.f;
+	int N = points.size();
+	for (int i = 0; i < N; i++)
+	{
+		Complex z = points[(i + 1) % N] - points[i];
+		x += z.a * z.a + z.b * z.b;
+	}
+	return N * x;
 }
 
 float iFourier::ddnorm2(std::vector<Complex>& points)
 {
-	std::vector<Complex> dpoints;
-	int m = points.size();
-	for (int i = 1; i < m; i++)
-		dpoints.push_back((points[i] - points[i - 1]) * m / (2 * Pi));
-	std::vector<Complex> ddpoints;
-	m = dpoints.size();
-	for (int i = 1; i < m; i++)
-		ddpoints.push_back((dpoints[i] - dpoints[i - 1]) * m / (2 * Pi));
-	return norm2(ddpoints);
+	float x = 0.f;
+	int N = points.size();
+	for (int i = 0; i < N; i++)
+	{
+		Complex z = points[(i + 1) % N] + points[(i - 1 + N) % N] - 2 * points[i];
+		x += z.a * z.a + z.b * z.b;
+	}
+	return 2 * N * N * N * x;
 }
 
 float iFourier::norm2()
 {
-	float x = 0;
-	int m = Points.size();
-	for (int i = 0; i < m; i++)
-		x += Points[i].a * Points[i].a + Points[i].b * Points[i].b;
-	Norm2 = x / m;
+	float x = 0.f;
+	int N = Points.size();
+	for (int i = 0; i < N; i++)
+	{
+		Complex z = Points[i] + Points[(i + 1) % N];
+		x += z.a * z.a + z.b * z.b;
+	}
+	Norm2 = 0.25f * x / N;
 	return Norm2;
 }
 
 float iFourier::dnorm2()
 {
-	std::vector<Complex> dpoints;
-	int m = Points.size();
-	for (int i = 1; i < m; i++)
-		dpoints.push_back((Points[i] - Points[i - 1]) * m / (2 * Pi));
-	dNorm2 = norm2(dpoints);
+	float x = 0.f;
+	int N = Points.size();
+	for (int i = 0; i < N; i++)
+	{
+		Complex z = Points[(i + 1) % N] - Points[i];
+		x += z.a * z.a + z.b * z.b;
+	}
+	dNorm2 = N * x;
 	return dNorm2;
 }
 
 float iFourier::ddnorm2()
 {
-	std::vector<Complex> dpoints;
-	int m = Points.size();
-	for (int i = 1; i < m; i++)
-		dpoints.push_back((Points[i] - Points[i - 1]) * m / (2 * Pi));
-	std::vector<Complex> ddpoints;
-	m = dpoints.size();
-	for (int i = 1; i < m; i++)
-		ddpoints.push_back((dpoints[i] - dpoints[i - 1]) * m / (2 * Pi));
-	ddNorm2 = norm2(ddpoints);
+	float x = 0.f;
+	int N = Points.size();
+	for (int i = 0; i < N; i++)
+	{
+		Complex z = Points[(i + 1) % N] + Points[(i - 1 + N) % N] - 2 * Points[i];
+		x += z.a * z.a + z.b * z.b;
+	}
+	ddNorm2 = 2 * N * N * N * x;
 	return ddNorm2;
 }
 
@@ -193,20 +203,21 @@ void iFourier::computeLf(float error)
 	float dN = dnorm2(diffPoints);
 	float ddN = ddnorm2(diffPoints);
 	float moderror = error * sqrtf(Norm2 / N);
-	float delta = 1.f / moderror * sqrt(ddN * N - dN * dN);
+	float delta = 1.f / moderror * sqrt(abs(ddN * N - dN * dN));
 	float l0 = (dN - delta) / N;
 	float l1 = (dN + delta) / N;
 	int l = 1;
 	if(Lf.size())
 		l = -Lf[Lf.size() - 1] + 1;
-	while (l * l < l1) {
-		if (l * l > l0)
+	while (4 * Pi * Pi * l * l < l1) {
+		if (4 * Pi * Pi * l * l > l0)
 		{
 			Lf.push_back(l);
 			Lf.push_back(-l);
 		}
 		l++;
 	}
+	printf("\n||f|| = %f\n||df|| = %f\n||Df|| = %f\nDesviacio = %f\nLOWER BOUND: %f\nUPPER BOUND: %f\n", N, dN, ddN, ddN * N - dN * dN, l0, l1);
 }
 
 void iFourier::OrderLf()
@@ -228,12 +239,12 @@ void iFourier::fullComputation(float error, int apriori)
 void iFourier::generateCoef()
 {
 	Coef.clear();
-	int m = Points.size();
+	int N = Points.size();
 	for (unsigned int i = 0; i < Order.size(); i++) {
 		Coef.push_back(Complex(0));
-		for (int j = 0; j < m; j++)
-			Coef[i] += Points[j] * Complex::exp(-I * float(2 * Pi * j * Order[i] / m));
-		Coef[i] = Coef[i] / float(m);
+		for (int j = 0; j < N; j++)
+			Coef[i] += (Points[j] + Points[j + 1]) / 2.f * Complex::exp(-I * 2.f * Pi * (j + 0.5) * float(Order[i]) / float(N));
+		Coef[i] = Coef[i] / float(N);
 	}
 }
 

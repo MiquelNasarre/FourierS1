@@ -28,7 +28,7 @@ public:
 	Texture TexHoder;
 	Sprite Holder;
 
-	bool playing = true;
+	bool playing = false;
 	float error = 0.05f;
 	int points = 200;
 	int apriori = 10;
