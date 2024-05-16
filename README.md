@@ -108,7 +108,7 @@ L_f^\pm(\epsilon) = \frac{||df||^2 \pm \epsilon^{-1}
 \sqrt{||\Delta f||^2||f||^2 - ||df||^4}}{||f||^2}
 $$
 
-Where $L_f^\pm$ determines the upper and lower bounds for the coefficients so that $\ell^2 \in \left\[L_f^- , L_f^+ \right]$.
+Where $L_f^\pm$ determines the upper and lower bounds for the coefficients so that $4\pi^2\ell^2 \in \left\[L_f^- , L_f^+ \right]$.
 
 In case we have already some coefficients computed $I\subset\Lambda$ we may use the formula for the new set of frequencies
 
