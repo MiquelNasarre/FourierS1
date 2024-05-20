@@ -83,5 +83,18 @@
     <ClInclude Include="include\Visual.h">
       <Filter>Sources\Public</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Sources\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\Icon.ico">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>
