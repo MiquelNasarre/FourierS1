@@ -20,8 +20,8 @@ This video shows the opening example of the program.
 
 If you are not planning to build and run the program yourself and you do not need the code, you can also find the 
 program executable with its associated files in the following 
-[link](https://drive.google.com/drive/folders/1Vs1srl3yydlUkP4jELVX5Vhs-AvXhtZF?usp=sharing). 
-Please note that the program will only work on Windows 7+ operating systems.
+[link](https://github.com/MiquelNasarre/FourierS1/releases/tag/v1.0). 
+Please note that the program will only work on Windows 7 or newer operating systems.
 
 ## How to Use it
 First, clone the repository into your computer and open the solution file with Visual Studio, then compile the only
